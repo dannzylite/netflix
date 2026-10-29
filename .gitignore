@@ -1,0 +1,7 @@
+# Real keys stay on your machine and in Vercel's settings, never in git
+.env
+.env.*
+!.env.example
+.vercel/
+node_modules/
+.DS_Store

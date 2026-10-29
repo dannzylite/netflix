@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>A little something for you 💌</title>
+  <meta name="description" content="Something's on its way to you… 💌">
+  <meta name="theme-color" content="#1f0711">
+
+  <!-- Link preview when the URL is texted -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Something's on its way to you… 💌">
+  <meta property="og:description" content="Tap to open 💕">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%8C%3C/text%3E%3C/svg%3E">
+
+  <!-- Fonts: script for the letter, serif for headings, sans for UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Poppins:wght@300;400;500;600&display=swap">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Emails and movie data go through the Vercel functions in /api -->
+  <script src="script.js" defer></script>
+</head>
+<body data-step="0">
+
+  <!-- Background: gradient sky, stars and drifting hearts/sparkles -->
+  <div class="sky" aria-hidden="true">
+    <div class="stars" id="stars"></div>
+    <div class="ambient" id="ambient"></div>
+  </div>
+
+  <!-- Top bar: back button + heart step indicator -->
+  <header class="topbar" id="topbar">
+    <button class="back-btn" id="back-btn" type="button" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span id="back-label">Back</span>
+    </button>
+    <nav class="progress" id="progress-nav" aria-label="Progress" hidden>
+      <ol class="progress-list" id="progress"></ol>
+      <span class="sr-only" id="progress-label"></span>
+    </nav>
+  </header>
+
+  <main id="app">
+
+    <!-- ============ STEP 1 · THE LETTER ARRIVES ============ -->
+    <section class="step step-letter" id="step-1" data-step="1" hidden aria-label="A letter for you">
+
+      <div class="intro" id="intro">
+        <p class="intro-line">Something's on its way to you…</p>
+
+        <div class="env-stage" id="env-stage">
+          <div class="env-fly-x">
+            <div class="env-fly-y">
+              <div class="env-wobble">
+                <div class="envelope" id="envelope">
+                  <div class="env-back"></div>
+                  <div class="env-letter"></div>
+                  <div class="env-front"><span class="env-to" id="env-to">For you 💕</span></div>
+                  <div class="env-flap-wrap"><div class="env-flap"></div></div>
+                  <button class="seal" id="seal" type="button" aria-label="Break the seal and open your letter">
+                    <span class="seal-half seal-l"><span class="seal-face"><svg class="seal-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.4-4.5-9.5-9.2C1.1 8.4 3.3 4.6 7 4.6c2.1 0 3.6 1.2 5 3 1.4-1.8 2.9-3 5-3 3.7 0 5.9 3.8 4.5 7.2C19.4 16.5 12 21 12 21z"/></svg></span></span>
+                    <span class="seal-half seal-r"><span class="seal-face"><svg class="seal-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.4-4.5-9.5-9.2C1.1 8.4 3.3 4.6 7 4.6c2.1 0 3.6 1.2 5 3 1.4-1.8 2.9-3 5-3 3.7 0 5.9 3.8 4.5 7.2C19.4 16.5 12 21 12 21z"/></svg></span></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="env-shadow"></div>
+        </div>
+
+        <p class="tap-hint" id="tap-hint">Tap the seal to open 💌</p>
+      </div>
+
+      <div class="letter-wrap" id="letter-wrap" hidden>
+        <article class="letter" id="letter" aria-labelledby="letter-heading">
+          <h1 class="sr-only" id="letter-heading">A letter for you</h1>
+          <button class="skip-btn" id="skip-btn" type="button">skip ›</button>
+          <div class="letter-body">
+            <p class="sr-only" id="letter-sr"></p>
+            <div class="letter-text" aria-hidden="true"><span id="typed"></span><span class="pen" id="pen"><svg viewBox="0 0 24 24"><path d="M3.2 20.8l1.2-4.6L16.6 4a2 2 0 0 1 2.8 0l.6.6a2 2 0 0 1 0 2.8L7.8 19.6z" fill="currentColor"/><path d="M14.6 6l3.4 3.4" stroke="rgba(255,250,240,.55)" stroke-width="1.3"/></svg></span></div>
+          </div>
+          <div class="letter-actions" id="letter-actions" hidden>
+            <button class="btn-yes" id="yes-btn" type="button">YES 💕</button>
+            <button class="btn-no" id="no-btn" type="button">No</button>
+          </div>
+        </article>
+        <div class="fold-panels" aria-hidden="true">
+          <div class="panel panel-mid"></div>
+          <div class="panel panel-bot"></div>
+          <div class="panel panel-top"></div>
+        </div>
+      </div>
+
+      <div class="yes-message" id="yes-message" hidden>
+        <p class="yes-big">You just made my whole week 🥹</p>
+        <p class="yes-sub">Now let's plan it…</p>
+      </div>
+    </section>
+
+    <!-- ============ STEP 2 · PLATFORM ============ -->
+    <section class="step" id="step-2" data-step="2" hidden aria-labelledby="s2-title">
+      <div class="step-inner">
+        <header class="step-head">
+          <h2 id="s2-title" tabindex="-1">Where are we watching? 📺</h2>
+          <p class="sub">Pick our streaming spot.</p>
+        </header>
+        <div class="platform-grid" id="platform-grid"></div>
+        <div class="step-actions">
+          <button class="btn btn-primary" type="button" data-next="2" id="next-2" hidden>Continue</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STEP 3 · MOVIE OR SERIES ============ -->
+    <section class="step" id="step-3" data-step="3" hidden aria-labelledby="s3-title">
+      <div class="step-inner">
+        <header class="step-head">
+          <h2 id="s3-title" tabindex="-1">Movie night or series binge?</h2>
+          <p class="sub">Both come with snacks, obviously.</p>
+        </header>
+        <div class="type-grid" id="type-grid">
+          <button class="tycard" type="button" data-type="movie" aria-pressed="false">
+            <span class="tycard-emoji" aria-hidden="true">🎬</span>
+            <span class="tycard-title">Movie night</span>
+            <span class="tycard-sub">One perfect film, popcorn in hand</span>
+            <span class="badge" aria-hidden="true">♥</span>
+          </button>
+          <button class="tycard" type="button" data-type="tv" aria-pressed="false">
+            <span class="tycard-emoji" aria-hidden="true">📺</span>
+            <span class="tycard-title">Series binge</span>
+            <span class="tycard-sub">“Just one more episode…” or five</span>
+            <span class="badge" aria-hidden="true">♥</span>
+          </button>
+        </div>
+        <div class="step-actions">
+          <button class="btn btn-primary" type="button" data-next="3" id="next-3" hidden>Continue</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STEP 4 · GENRE ============ -->
+    <section class="step" id="step-4" data-step="4" hidden aria-labelledby="s4-title">
+      <div class="step-inner">
+        <header class="step-head">
+          <h2 id="s4-title" tabindex="-1">What are we in the mood for?</h2>
+          <p class="sub">Pick up to 3 💕 <span class="counter" id="genre-count">0/3</span></p>
+        </header>
+        <div class="chips" id="genre-chips" role="group" aria-label="Genres"></div>
+        <div class="step-actions sticky">
+          <button class="btn btn-primary" type="button" data-next="4" id="next-4">Continue</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STEP 5 · COUNTRY / VIBE ============ -->
+    <section class="step" id="step-5" data-step="5" hidden aria-labelledby="s5-title">
+      <div class="step-inner">
+        <header class="step-head">
+          <h2 id="s5-title" tabindex="-1">Any particular vibe?</h2>
+          <p class="sub">Where should our story come from? Pick as many as you like 🌍</p>
+        </header>
+        <div class="chips" id="country-chips" role="group" aria-label="Country or vibe"></div>
+        <div class="step-actions sticky">
+          <button class="btn btn-primary" type="button" data-next="5" id="next-5">Continue</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STEP 6 · RECOMMENDATIONS + SEARCH ============ -->
+    <section class="step step-recs" id="step-6" data-step="6" hidden aria-labelledby="s6-title">
+      <div class="step-inner wide">
+        <header class="step-head">
+          <h2 id="s6-title" tabindex="-1">Here's what I found for us 🍿</h2>
+          <p class="sub">Pick up to 3 favourites, or search for anything.</p>
+        </header>
+
+        <form class="search" id="search-form" role="search" autocomplete="off">
+          <label class="sr-only" for="search-input">Search any movie or series</label>
+          <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.6-3.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input class="search-input" id="search-input" type="search" placeholder="Search any movie or series…" enterkeyhint="search" autocomplete="off" spellcheck="false">
+          <button class="search-clear" id="search-clear" type="button" aria-label="Clear search" hidden>✕</button>
+        </form>
+
+        <div class="results-bar" id="results-bar" hidden></div>
+        <div class="title-grid" id="title-grid"></div>
+        <div class="grid-status" id="grid-status" hidden></div>
+        <div class="more-wrap">
+          <button class="btn btn-ghost" id="more-btn" type="button" hidden>Show more</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STEP 7 · DATE & TIME ============ -->
+    <section class="step" id="step-7" data-step="7" hidden aria-labelledby="s7-title">
+      <div class="step-inner">
+        <header class="step-head">
+          <h2 id="s7-title" tabindex="-1">When are you free? 🗓️</h2>
+          <p class="sub">Pick our night. I'll bring the blankets.</p>
+        </header>
+        <div class="paper form-card">
+          <p class="form-label" id="quick-label">Quick picks</p>
+          <div class="chips" id="date-quick" role="group" aria-labelledby="quick-label"></div>
+
+          <label class="field">
+            <span>Or choose a date</span>
+            <input class="input" id="date-input" type="date">
+          </label>
+
+          <p class="form-label" id="time-label">What time?</p>
+          <div class="chips" id="time-chips" role="group" aria-labelledby="time-label"></div>
+
+          <label class="field" id="time-custom" hidden>
+            <span>Custom time</span>
+            <input class="input" id="time-input" type="time" step="300">
+          </label>
+
+          <p class="when-preview" id="when-preview" aria-live="polite"></p>
+          <p class="field-error" id="when-error" role="alert" hidden></p>
+        </div>
+        <div class="step-actions">
+          <button class="btn btn-primary" type="button" data-next="7" id="next-7" disabled>Continue</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STEP 8 · EXTRA CUTE STUFF ============ -->
+    <section class="step" id="step-8" data-step="8" hidden aria-labelledby="s8-title">
+      <div class="step-inner">
+        <header class="step-head">
+          <h2 id="s8-title" tabindex="-1">A few extra cute details ✨</h2>
+          <p class="sub">The important stuff.</p>
+        </header>
+        <div class="paper form-card">
+          <h3 class="form-title" id="snack-label">Snacks 🍿</h3>
+          <p class="form-hint">Pick as many as you want.</p>
+          <div class="chips" id="snack-chips" role="group" aria-labelledby="snack-label"></div>
+
+          <h3 class="form-title" id="cozy-title">Cozy level</h3>
+          <div class="cozy">
+            <div class="cozy-emoji" id="cozy-emoji" aria-hidden="true">😊</div>
+            <p class="cozy-label" id="cozy-label">Shoulder to shoulder</p>
+            <input class="range" id="cozy-range" type="range" min="0" max="4" step="1" value="2" aria-labelledby="cozy-title">
+            <div class="cozy-ends" aria-hidden="true"><span>Sitting like strangers</span><span>Full blanket burrito 🫶</span></div>
+          </div>
+
+          <label class="field">
+            <span>Anything you want me to know? <em>(optional)</em></span>
+            <textarea class="input" id="note-input" rows="3" maxlength="500" placeholder="e.g. bring extra blankets 🧣"></textarea>
+          </label>
+
+          <h3 class="form-title">Where should I send our ticket? 💌</h3>
+          <label class="field">
+            <span>Your name</span>
+            <input class="input" id="name-input" type="text" autocomplete="given-name" maxlength="60">
+          </label>
+          <label class="field">
+            <span>Your email</span>
+            <input class="input" id="email-input" type="email" inputmode="email" autocomplete="email" maxlength="120" placeholder="you@example.com">
+          </label>
+          <p class="field-error" id="details-error" role="alert" hidden></p>
+        </div>
+        <div class="step-actions">
+          <button class="btn btn-primary" type="button" data-next="8" id="next-8">See our ticket 🎟️</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STEP 9 · CONFIRMATION TICKET ============ -->
+    <section class="step" id="step-9" data-step="9" hidden aria-labelledby="s9-title">
+      <div class="step-inner">
+        <header class="step-head">
+          <h2 id="s9-title" tabindex="-1">Here's our ticket 🎟️</h2>
+          <p class="sub">Check everything looks perfect.</p>
+        </header>
+        <div class="ticket" id="ticket"></div>
+        <div class="confirm-area">
+          <p class="field-error center" id="ticket-missing" hidden>A couple of things are still missing. Tap “Add” to fill them in 💕</p>
+          <button class="btn btn-confirm" id="confirm-btn" type="button">Confirm our date 💌</button>
+          <div class="send-error" id="send-error" role="alert" hidden>
+            <p id="send-error-msg"></p>
+            <div class="send-error-actions">
+              <button class="btn btn-primary" id="retry-btn" type="button">Try again 💌</button>
+              <button class="btn btn-ghost" id="copy-btn" type="button">Copy the details 📋</button>
+            </div>
+            <textarea class="copy-fallback" id="copy-fallback" readonly hidden aria-label="Date details"></textarea>
+            <button class="link-btn" id="skip-send-btn" type="button" hidden>See our countdown anyway →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STEP 10 · CELEBRATION ============ -->
+    <section class="step step-celebrate" id="step-10" data-step="10" hidden aria-labelledby="s10-title">
+      <div class="step-inner celebrate">
+        <div class="beat-heart" aria-hidden="true">💖</div>
+        <h2 id="s10-title" tabindex="-1">It's a date! 💕</h2>
+        <p class="thanks" id="thanks-line"></p>
+        <div class="countdown" id="countdown" role="timer" aria-live="off">
+          <div class="cd-tile"><span class="cd-num" id="cd-d">0</span><span class="cd-unit">days</span></div>
+          <div class="cd-tile"><span class="cd-num" id="cd-h">0</span><span class="cd-unit">hours</span></div>
+          <div class="cd-tile"><span class="cd-num" id="cd-m">0</span><span class="cd-unit">mins</span></div>
+          <div class="cd-tile"><span class="cd-num" id="cd-s">0</span><span class="cd-unit">secs</span></div>
+        </div>
+        <p class="countdown-line" id="countdown-line"></p>
+        <div class="cal-actions">
+          <button class="btn btn-primary" id="ics-btn" type="button">Add to calendar 📅</button>
+          <a class="link-btn" id="gcal-link" href="https://calendar.google.com/" target="_blank" rel="noopener">or add it to Google Calendar</a>
+        </div>
+        <p class="email-note" id="email-note"></p>
+        <div class="celebrate-picks" id="celebrate-picks"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shortlist tray (step 6) -->
+  <aside class="tray" id="tray" aria-label="Our shortlist" hidden>
+    <div class="tray-inner">
+      <div class="tray-top">
+        <span class="tray-title">Our shortlist <b id="tray-count">0/3</b></span>
+        <button class="link-btn tray-spin" id="spin-btn" type="button" hidden>Can't decide? Spin the wheel 🎡</button>
+      </div>
+      <ul class="tray-picks" id="tray-picks"></ul>
+      <button class="btn btn-primary tray-next" id="tray-next" type="button" disabled>Continue</button>
+    </div>
+  </aside>
+
+  <footer class="site-footer">
+    <p><a href="https://www.themoviedb.org/" target="_blank" rel="noopener">Movie data &amp; posters from <span class="tmdb-word">TMDB</span></a></p>
+    <p class="fine">This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+  </footer>
+
+  <!-- Music toggle (off by default) -->
+  <button class="music-btn" id="music-btn" type="button" aria-pressed="false" aria-label="Play music">
+    <svg class="icon-note" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18.5a2.5 2.5 0 1 1-2.5-2.5c.5 0 1 .1 1.5.4V5.2l11-2.2v12.5a2.5 2.5 0 1 1-2.5-2.5c.5 0 1 .1 1.5.4V7.4L9 9.1z" fill="currentColor"/></svg>
+    <span class="icon-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+  </button>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="sr-only" id="announcer" aria-live="polite"></div>
+
+  <!-- "No" fee modal: a joke invoice, no payment of any kind -->
+  <div class="modal" id="fee-modal" role="dialog" aria-modal="true" aria-labelledby="fee-title" aria-describedby="fee-desc" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card">
+      <h2 class="modal-title" id="fee-title">Ooh, declining requires a fee 😌</h2>
+      <p class="modal-text" id="fee-desc">Saying no to this date costs $50.00. Please pay to proceed.</p>
+      <div class="invoice">
+        <div class="invoice-head"><span>Invoice</span><span>#NO-THANK-YOU</span></div>
+        <ul class="invoice-lines">
+          <li><span>Emotional damages</span><i aria-hidden="true"></i><b>$30.00</b></li>
+          <li><span>Wasted cute envelope</span><i aria-hidden="true"></i><b>$15.00</b></li>
+          <li><span>Processing heartbreak fee</span><i aria-hidden="true"></i><b>$5.00</b></li>
+        </ul>
+        <div class="invoice-total"><span>Total</span><b>$50.00</b></div>
+        <div class="stamp" id="declined-stamp" aria-hidden="true" hidden>Declined</div>
+      </div>
+      <p class="fee-result" id="fee-result" role="status" hidden></p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost-ink" id="pay-btn" type="button">Pay $50 🙄</button>
+        <button class="btn btn-primary" id="fine-yes-btn" type="button" data-autofocus>Fine, I'll say yes 💕</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Spin-the-wheel modal -->
+  <div class="modal" id="wheel-modal" role="dialog" aria-modal="true" aria-labelledby="wheel-title" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card wheel-card">
+      <button class="modal-x" type="button" data-close aria-label="Close">✕</button>
+      <h2 class="modal-title" id="wheel-title">Let fate decide 🎡</h2>
+      <div class="wheel-wrap">
+        <div class="wheel-pointer" aria-hidden="true"></div>
+        <div class="wheel" id="wheel" aria-hidden="true"></div>
+        <div class="wheel-hub" aria-hidden="true">💕</div>
+      </div>
+      <p class="wheel-result" id="wheel-result" role="status"></p>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="wheel-spin" type="button" data-autofocus>Spin! 🎡</button>
+        <button class="btn btn-ghost-ink" id="wheel-done" type="button" data-close hidden>Love it 💕</button>
+      </div>
+    </div>
+  </div>
+
+  <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
+
+  <noscript><p class="noscript">This little invitation needs JavaScript switched on 💕</p></noscript>
+</body>
+</html>
